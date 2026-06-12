@@ -1,0 +1,2247 @@
+{
+  "abstraction_level": 2,
+  "qubit_count": 3,
+  "ancilla_qubits": [],
+  "operations": [
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 1,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": -0.6288296095601025,
+              "imag": 0.0
+            },
+            {
+              "real": -0.1290567159256988,
+              "imag": 0.7667579058705312
+            }
+          ],
+          [
+            {
+              "real": -0.1290567159256988,
+              "imag": -0.7667579058705312
+            },
+            {
+              "real": 0.6288296095601025,
+              "imag": -0.0
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.7613508767165689,
+              "imag": -9.625957429584343e-19
+            },
+            {
+              "real": 0.5664196434496785,
+              "imag": -0.3154578102333983
+            }
+          ],
+          [
+            {
+              "real": 0.5664196434496785,
+              "imag": 0.3154578102333983
+            },
+            {
+              "real": -0.7613508767165689,
+              "imag": -9.625957429584343e-19
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.8667224779029674,
+              "imag": 5.9535982886201864e-18
+            },
+            {
+              "real": 0.41809701374178676,
+              "imag": -0.27200557604199993
+            }
+          ],
+          [
+            {
+              "real": 0.41809701374178676,
+              "imag": 0.27200557604199993
+            },
+            {
+              "real": -0.8667224779029674,
+              "imag": 5.9535982886201864e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9526689080895363,
+              "imag": 2.3358755307454763e-18
+            },
+            {
+              "real": -0.11944052894174952,
+              "imag": -0.2795637880799399
+            }
+          ],
+          [
+            {
+              "real": -0.11944052894174952,
+              "imag": 0.2795637880799399
+            },
+            {
+              "real": -0.9526689080895363,
+              "imag": 2.3358755307454763e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9929824460962178,
+              "imag": -1.2555010263163976e-18
+            },
+            {
+              "real": 0.0949759811070999,
+              "imag": 0.07046577011227428
+            }
+          ],
+          [
+            {
+              "real": 0.0949759811070999,
+              "imag": -0.07046577011227428
+            },
+            {
+              "real": -0.9929824460962178,
+              "imag": -1.2555010263163976e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.8632845940628047,
+              "imag": -1.2297205098616367e-19
+            },
+            {
+              "real": -0.31111281030335336,
+              "imag": -0.3974273882345908
+            }
+          ],
+          [
+            {
+              "real": -0.31111281030335336,
+              "imag": 0.3974273882345908
+            },
+            {
+              "real": -0.8632845940628047,
+              "imag": -1.2297205098616367e-19
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9667252063401297,
+              "imag": -1.0216702034902192e-17
+            },
+            {
+              "real": -0.25269481504227986,
+              "imag": -0.039846027121680345
+            }
+          ],
+          [
+            {
+              "real": -0.25269481504227986,
+              "imag": 0.039846027121680345
+            },
+            {
+              "real": -0.9667252063401297,
+              "imag": -1.0216702034902192e-17
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": -0.2787363965352656,
+              "imag": -0.0986878346666055
+            },
+            {
+              "real": 0.8746002558220202,
+              "imag": 0.38424097263489326
+            }
+          ],
+          [
+            {
+              "real": 0.8746002558220202,
+              "imag": -0.38424097263489326
+            },
+            {
+              "real": 0.2787363965352656,
+              "imag": -0.0986878346666055
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9549823578796196,
+              "imag": 2.3721678789924028e-17
+            },
+            {
+              "real": 0.058109324064202515,
+              "imag": -0.29091579983817234
+            }
+          ],
+          [
+            {
+              "real": 0.058109324064202515,
+              "imag": 0.29091579983817234
+            },
+            {
+              "real": -0.9549823578796196,
+              "imag": 2.3721678789924028e-17
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.8548653590918354,
+              "imag": -4.794938910568985e-19
+            },
+            {
+              "real": -0.12386658858936386,
+              "imag": -0.5038474829311153
+            }
+          ],
+          [
+            {
+              "real": -0.12386658858936386,
+              "imag": 0.5038474829311153
+            },
+            {
+              "real": -0.8548653590918354,
+              "imag": -4.794938910568985e-19
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.7970307354897542,
+              "imag": 5.15818937511785e-18
+            },
+            {
+              "real": -0.22679667999363748,
+              "imag": -0.5597367887038739
+            }
+          ],
+          [
+            {
+              "real": -0.22679667999363748,
+              "imag": 0.5597367887038739
+            },
+            {
+              "real": -0.7970307354897542,
+              "imag": 5.15818937511785e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9634372983866498,
+              "imag": -6.139072836460222e-18
+            },
+            {
+              "real": -0.2677967095243217,
+              "imag": -0.008572890141591735
+            }
+          ],
+          [
+            {
+              "real": -0.2677967095243217,
+              "imag": 0.008572890141591735
+            },
+            {
+              "real": -0.9634372983866498,
+              "imag": -6.139072836460222e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9328414695859176,
+              "imag": -6.375790378334027e-20
+            },
+            {
+              "real": 0.2502420841453178,
+              "imag": -0.25920202920384955
+            }
+          ],
+          [
+            {
+              "real": 0.2502420841453178,
+              "imag": 0.25920202920384955
+            },
+            {
+              "real": -0.9328414695859176,
+              "imag": -6.375790378334027e-20
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "0"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "0"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": -0.33315553768159256,
+              "imag": 0.620660954676652
+            },
+            {
+              "real": 0.11474001494075789,
+              "imag": 0.7004442133556037
+            }
+          ],
+          [
+            {
+              "real": 0.11474001494075789,
+              "imag": -0.7004442133556037
+            },
+            {
+              "real": 0.33315553768159256,
+              "imag": 0.620660954676652
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.706539978062408,
+              "imag": 1.3831108846138593e-17
+            },
+            {
+              "real": 0.46218257871409707,
+              "imag": -0.5358997325365628
+            }
+          ],
+          [
+            {
+              "real": 0.46218257871409707,
+              "imag": 0.5358997325365628
+            },
+            {
+              "real": -0.706539978062408,
+              "imag": 1.3831108846138593e-17
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9646457284234711,
+              "imag": 1.150243202333616e-18
+            },
+            {
+              "real": -0.24617691686431323,
+              "imag": -0.09410390128752166
+            }
+          ],
+          [
+            {
+              "real": -0.24617691686431323,
+              "imag": 0.09410390128752166
+            },
+            {
+              "real": -0.9646457284234711,
+              "imag": 1.150243202333616e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9229303171903198,
+              "imag": -2.6322812485031196e-18
+            },
+            {
+              "real": -0.3592928367633269,
+              "imag": -0.13823272789588195
+            }
+          ],
+          [
+            {
+              "real": -0.3592928367633269,
+              "imag": 0.13823272789588195
+            },
+            {
+              "real": -0.9229303171903198,
+              "imag": -2.6322812485031196e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9493482793620924,
+              "imag": 3.1019004545726407e-18
+            },
+            {
+              "real": -0.312959997028931,
+              "imag": -0.028175960176830852
+            }
+          ],
+          [
+            {
+              "real": -0.312959997028931,
+              "imag": 0.028175960176830852
+            },
+            {
+              "real": -0.9493482793620924,
+              "imag": 3.1019004545726407e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.14055913092602593,
+              "imag": 0.8787460288626373
+            },
+            {
+              "real": 0.08415775008049121,
+              "imag": 0.44829233829372417
+            }
+          ],
+          [
+            {
+              "real": 0.08415775008049121,
+              "imag": -0.44829233829372417
+            },
+            {
+              "real": -0.14055913092602593,
+              "imag": 0.8787460288626373
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9130904953247522,
+              "imag": -0.0
+            },
+            {
+              "real": 0.38465555773126825,
+              "imag": -0.13529911032244632
+            }
+          ],
+          [
+            {
+              "real": 0.38465555773126825,
+              "imag": 0.13529911032244632
+            },
+            {
+              "real": -0.9130904953247522,
+              "imag": 0.0
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.8050475145554283,
+              "imag": -7.464120450218552e-18
+            },
+            {
+              "real": -0.017508184002118298,
+              "imag": -0.5929519059764251
+            }
+          ],
+          [
+            {
+              "real": -0.017508184002118298,
+              "imag": 0.5929519059764251
+            },
+            {
+              "real": -0.8050475145554283,
+              "imag": -7.464120450218552e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        0
+      ],
+      "controls": [
+        {
+          "qubit": 1,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9296331631014952,
+              "imag": -1.7347234759768075e-18
+            },
+            {
+              "real": 0.04938387495983078,
+              "imag": 0.3651621762393536
+            }
+          ],
+          [
+            {
+              "real": 0.04938387495983078,
+              "imag": -0.3651621762393536
+            },
+            {
+              "real": -0.9296331631014952,
+              "imag": -1.7347234759768075e-18
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.0620364369135433,
+              "imag": 0.6257103570695954
+            },
+            {
+              "real": -0.4310431845436304,
+              "imag": -0.6471783391070789
+            }
+          ],
+          [
+            {
+              "real": -0.4310431845436304,
+              "imag": 0.6471783391070789
+            },
+            {
+              "real": -0.0620364369135433,
+              "imag": 0.6257103570695954
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.8203311540031184,
+              "imag": -0.0
+            },
+            {
+              "real": 0.015337676768767959,
+              "imag": -0.5716830882956474
+            }
+          ],
+          [
+            {
+              "real": 0.015337676768767959,
+              "imag": 0.5716830882956474
+            },
+            {
+              "real": -0.8203311540031184,
+              "imag": 0.0
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.9763093270439549,
+              "imag": -0.0
+            },
+            {
+              "real": 0.16936358573238644,
+              "imag": 0.13467024079153014
+            }
+          ],
+          [
+            {
+              "real": 0.16936358573238644,
+              "imag": -0.13467024079153014
+            },
+            {
+              "real": -0.9763093270439549,
+              "imag": 0.0
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "0"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": -0.15472487086165113,
+              "imag": -0.9351271842855426
+            },
+            {
+              "real": 0.30757288374372904,
+              "imag": 0.08364379673714473
+            }
+          ],
+          [
+            {
+              "real": 0.30757288374372904,
+              "imag": -0.08364379673714473
+            },
+            {
+              "real": 0.15472487086165113,
+              "imag": -0.9351271842855426
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "generalized_toffoli",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        1
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 2,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": 0.6132816023225716,
+              "imag": -0.0
+            },
+            {
+              "real": -0.09945575766264246,
+              "imag": -0.7835778382014188
+            }
+          ],
+          [
+            {
+              "real": -0.09945575766264246,
+              "imag": 0.7835778382014188
+            },
+            {
+              "real": -0.6132816023225716,
+              "imag": 0.0
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "type": "controlled_unitary",
+      "targets": [
+        2
+      ],
+      "controls": [
+        {
+          "qubit": 0,
+          "state": "1"
+        },
+        {
+          "qubit": 1,
+          "state": "1"
+        }
+      ],
+      "unitary": {
+        "matrix": [
+          [
+            {
+              "real": -0.5481248770742327,
+              "imag": -0.1999237575258957
+            },
+            {
+              "real": -0.2754554250951827,
+              "imag": -0.764011727066225
+            }
+          ],
+          [
+            {
+              "real": 0.7771585520273194,
+              "imag": 0.23582662131295526
+            },
+            {
+              "real": -0.22782929756728482,
+              "imag": -0.5371258705935821
+            }
+          ]
+        ]
+      }
+    }
+  ]
+}
