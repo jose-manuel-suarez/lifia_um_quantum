@@ -8,6 +8,7 @@ import logging
 from pathlib import Path
 from datetime import datetime
 import shutil
+import shlex
 
 from shared.config import load_env
 from shared.logger import get_logger
@@ -34,13 +35,12 @@ def run_workflow(env_path: str = ".env", output_dir: str = "out", run_ts: str = 
     run_dir = os.path.join(base_output_dir, ts)
     os.makedirs(run_dir, exist_ok=True)
 
-    # If no logger was provided, create a per-run logger in logs/<ts>/
+    # If no logger was provided, create a per-run logger writing directly into logs/
     if logger is None:
         base_log_dir = Path(env.get("LOG_DIR", "logs"))
-        run_log_dir = base_log_dir / ts
-        os.makedirs(run_log_dir, exist_ok=True)
-        log_filename = Path(env.get("LOG_FILE", "workflow.log")).name
-        logger = get_logger("lifia_workflow", log_file=str(run_log_dir / log_filename))
+        os.makedirs(base_log_dir, exist_ok=True)
+        log_filename = f"workflow_shot_{ts}.log"
+        logger = get_logger("lifia_workflow", log_file=str(base_log_dir / log_filename))
 
     logger.info(f"Run output directory: {run_dir}")
 
@@ -148,7 +148,11 @@ def _pip_install(venv_python: Path, requirements: Path, logger: "logging.Logger"
 
 
 def _find_suitable_python(min_version=(3, 10)):
-    """Return a command list for a python executable with at least min_version or None."""
+    """Return a command list for a python executable with at least min_version or None.
+
+    The returned value is a list suitable for use as the command prefix (e.g.
+    ``['py', '-3.10']`` or ``['C:\\\\Python310\\\\python.exe']``).
+    """
     candidates = []
     if sys.platform.startswith("win"):
         candidates = [["py", "-3.10"], ["py", "-3.11"], ["python3.10"], ["python3"], ["python"]]
@@ -156,19 +160,62 @@ def _find_suitable_python(min_version=(3, 10)):
         candidates = [["python3.10"], ["python3"], ["python"]]
 
     for parts in candidates:
+        # Resolve executable: prefer PATH lookup, otherwise allow absolute paths
         exe = shutil.which(parts[0])
+        if not exe and Path(parts[0]).exists():
+            exe = str(Path(parts[0]))
         if not exe:
             continue
-        cmd = parts + ["-c", "import sys; print(sys.version_info[0], sys.version_info[1])"]
+
+        # Build command using resolved exe plus remaining args
+        cmd = [exe] + parts[1:] + ["-c", "import sys; print(sys.version_info[0], sys.version_info[1])"]
         try:
             out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL, universal_newlines=True)
             vals = out.strip().split()
             if len(vals) >= 2:
                 maj = int(vals[0]); minor = int(vals[1])
                 if maj > min_version[0] or (maj == min_version[0] and minor >= min_version[1]):
-                    return parts
+                    # Return the command parts (use original parts but with resolved exe)
+                    return [exe] + parts[1:]
         except Exception:
             continue
+
+    # If not found via PATH/candidates, on Windows try common installation locations
+    if sys.platform.startswith("win"):
+        username = os.environ.get("USERNAME") or os.environ.get("USER") or ""
+        common_paths = [
+            r"C:\\Windows\\py.exe",
+            r"C:\\Windows\\System32\\py.exe",
+            fr"C:\\Users\\{username}\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+            fr"C:\\Users\\{username}\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+            r"C:\\Program Files\\Python310\\python.exe",
+            r"C:\\Program Files\\Python\\Python310\\python.exe",
+            r"C:\\Python310\\python.exe",
+        ]
+        for p in common_paths:
+            try:
+                if Path(p).exists():
+                    out = subprocess.check_output([p, "-c", "import sys; print(sys.version_info[0], sys.version_info[1])"], stderr=subprocess.DEVNULL, universal_newlines=True)
+                    vals = out.strip().split()
+                    if len(vals) >= 2:
+                        maj = int(vals[0]); minor = int(vals[1])
+                        if maj > min_version[0] or (maj == min_version[0] and minor >= min_version[1]):
+                            return [p]
+            except Exception:
+                continue
+
+    return None
+
+
+def _get_python_version(python_exe: Path):
+    """Return (major, minor) for the given python executable, or None if it cannot be determined."""
+    try:
+        out = subprocess.check_output([str(python_exe), "-c", "import sys; print(sys.version_info[0], sys.version_info[1])"], stderr=subprocess.DEVNULL, universal_newlines=True)
+        vals = out.strip().split()
+        if len(vals) >= 2:
+            return int(vals[0]), int(vals[1])
+    except Exception:
+        return None
     return None
 
 
@@ -188,56 +235,82 @@ def main(argv=None):
         ),
     )
     parser.add_argument("--run-ts", default=None, help="(internal) reuse the given run timestamp")
+    parser.add_argument(
+        "--python-exe",
+        default=None,
+        help=(
+            "Optional python executable (command or path) to create the venv with, "
+            "e.g. 'py -3.10' or '/usr/bin/python3.10'. If provided, this will be used to recreate the venv when needed."
+        ),
+    )
     args = parser.parse_args(argv)
 
     # Load env first
     env = load_env(args.env)
 
-    # Prepare timestamp and per-run log directory so bootstrap and child process share it
+    # Prepare timestamp and single log file in logs/ (no per-run subdirectories)
     ts = args.run_ts or datetime.now().strftime("%d_%m_%y_%H_%M")
     base_log_dir = Path(env.get("LOG_DIR", "logs"))
-    run_log_dir = base_log_dir / ts
-    os.makedirs(run_log_dir, exist_ok=True)
-    log_filename = Path(env.get("LOG_FILE", "workflow.log")).name
-    logger = get_logger("lifia_workflow", log_file=str(run_log_dir / log_filename))
-    logger.info(f"Log file: {run_log_dir / log_filename}")
+    os.makedirs(base_log_dir, exist_ok=True)
+    # Use fixed naming for per-run log files as requested: workflow_shot_DD_MM_YY_HH_MM.log
+    log_filename = f"workflow_shot_{ts}.log"
+    logger = get_logger("lifia_workflow", log_file=str(base_log_dir / log_filename))
+    logger.info(f"Log file: {base_log_dir / log_filename}")
 
     # If bootstrap requested and we're not already running inside the target venv, create venv and re-invoke
     if args.bootstrap:
         venv_dir = Path(args.venv)
-        venv_py = _venv_python(venv_dir)
 
-        # If current interpreter is already the venv python, just run workflow normally
         try:
+            venv_py = _venv_python(venv_dir)
             if venv_dir.exists() and Path(sys.executable).resolve() == venv_py.resolve():
                 logger.info("Already running inside target virtualenv; proceeding to run workflow")
             else:
-                # Create the venv. If current Python is older than 3.10, try to find a suitable python on PATH
-                if not venv_dir.exists():
-                    if sys.version_info < (3, 10):
-                        logger.info("Current interpreter < 3.10; attempting to find Python 3.10+ on PATH to create venv")
-                        py_cmd = _find_suitable_python(min_version=(3, 10))
-                        if py_cmd:
-                            logger.info(f"Creating virtualenv at {venv_dir} using: {' '.join(py_cmd)}")
-                            subprocess.run(py_cmd + ["-m", "venv", str(venv_dir)], check=True)
+                # If venv exists, validate or recreate it
+                if venv_dir.exists():
+                    venv_ver = _get_python_version(venv_py)
+                    if venv_ver is not None and (venv_ver[0] > 3 or (venv_ver[0] == 3 and venv_ver[1] >= 10)):
+                        logger.info(f"Existing virtualenv at {venv_dir} uses Python {venv_ver[0]}.{venv_ver[1]}")
+                    else:
+                        logger.warning(f"Existing virtualenv at {venv_dir} uses Python {venv_ver or 'unknown'} which is < 3.10; attempting to recreate with a suitable Python")
+                        # choose python command
+                        if args.python_exe:
+                            py_cmd = shlex.split(args.python_exe)
                         else:
-                            logger.info("No suitable external Python found; creating venv with current interpreter")
-                            _ensure_venv(venv_dir, logger)
+                            py_cmd = _find_suitable_python(min_version=(3, 10))
+
+                        if not py_cmd:
+                            raise RuntimeError("No suitable Python 3.10+ available to create virtualenv")
+
+                        logger.info(f"Recreating venv using: {' '.join(py_cmd)}")
+                        shutil.rmtree(venv_dir)
+                        subprocess.run(py_cmd + ["-m", "venv", str(venv_dir)], check=True)
+
+                else:
+                    # venv does not exist; create it using a suitable python
+                    if sys.version_info < (3, 10):
+                        if args.python_exe:
+                            py_cmd = shlex.split(args.python_exe)
+                        else:
+                            py_cmd = _find_suitable_python(min_version=(3, 10))
+
+                        if not py_cmd:
+                            raise RuntimeError("No suitable Python 3.10+ available to create virtualenv")
+
+                        logger.info(f"Creating virtualenv at {venv_dir} using: {' '.join(py_cmd)}")
+                        subprocess.run(py_cmd + ["-m", "venv", str(venv_dir)], check=True)
                     else:
                         _ensure_venv(venv_dir, logger)
-                else:
-                    logger.info(f"Virtualenv already exists at {venv_dir}")
 
                 venv_py = _venv_python(venv_dir)
 
-                # Always install the provided base requirements file first (if present)
+                # Install base requirements
                 base_requirements = _resolve_requirements_path(Path(args.requirements))
                 _pip_install(venv_py, base_requirements, logger)
 
-                # Also attempt to install ecosystem-specific requirements based on .env ECOSYSTEM
+                # Install ecosystem-specific requirements
                 ecosystem = env.get("ECOSYSTEM", "").strip()
                 if ecosystem:
-                    # Support 'ALL' to install the aggregated file, or comma-separated list
                     if ecosystem.upper() == "ALL":
                         agg = _resolve_requirements_path(Path("requeriments/requirements-all-ecosystems.txt"))
                         if agg.exists():
@@ -265,6 +338,12 @@ def main(argv=None):
                     raise subprocess.CalledProcessError(proc.returncode, cmd, output=proc.stdout, stderr=proc.stderr)
                 logger.info("Re-invocation succeeded inside venv; exiting bootstrap parent process")
                 return
+        except RuntimeError as re_err:
+            if "No suitable Python 3.10+ available" in str(re_err):
+                logger.warning("Could not create a Python 3.10+ virtualenv; proceeding to run in current interpreter (compatibility fallback).")
+            else:
+                logger.exception("Bootstrap failed")
+                raise
         except Exception:
             logger.exception("Bootstrap failed")
             raise
@@ -276,3 +355,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     main()
+    

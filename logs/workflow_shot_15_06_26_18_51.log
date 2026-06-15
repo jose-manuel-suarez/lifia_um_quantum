@@ -1,0 +1,29 @@
+2026-06-15 18:51:29,384 INFO Log file: logs\workflow_shot_15_06_26_18_51.log
+2026-06-15 18:51:29,426 WARNING Existing virtualenv at .venv uses Python (3, 8) which is < 3.10; attempting to recreate with a suitable Python
+2026-06-15 18:51:29,932 INFO Recreating venv using: C:\Users\PC\.pyenv\pyenv-win\shims\python3.BAT
+2026-06-15 18:51:41,502 INFO Upgrading pip in venv
+2026-06-15 18:51:47,123 INFO Installing requirements from C:\Users\PC\desarrollo\lifia_um_quantum\requirements\requirements.txt
+2026-06-15 18:53:17,489 INFO Upgrading pip in venv
+2026-06-15 18:53:18,557 INFO Installing requirements from C:\Users\PC\desarrollo\lifia_um_quantum\requirements\requirements-qiskit.txt
+2026-06-15 18:53:31,820 INFO Re-invoking inside venv: .venv\Scripts\python.exe C:\Users\PC\desarrollo\lifia_um_quantum\workflow.py --env .env --run-ts 15_06_26_18_51
+2026-06-15 18:53:32,440 INFO Log file: logs\workflow_shot_15_06_26_18_51.log
+2026-06-15 18:53:32,440 INFO Run output directory: out\15_06_26_18_51
+2026-06-15 18:53:32,441 INFO Workflow starting: ecosystem=QISKIT start_level=2
+2026-06-15 18:53:32,441 INFO Attempting conversion 2 -> 3
+2026-06-15 18:53:32,446 INFO Invoking original convert_2to3 implementation
+2026-06-15 18:53:32,450 INFO Wrote intermediate abstraction file: out\15_06_26_18_51\abstraction3.json
+2026-06-15 18:53:32,451 INFO Ecosystem QISKIT supports abstraction level 3
+2026-06-15 18:53:32,451 INFO Attempting conversion 3 -> 4
+2026-06-15 18:53:32,455 INFO Invoking original convert_3to4 implementation
+2026-06-15 18:53:32,458 INFO Wrote intermediate abstraction file: out\15_06_26_18_51\abstraction4.json
+2026-06-15 18:53:32,458 WARNING Ecosystem QISKIT DOES NOT fully support abstraction level 4
+2026-06-15 18:53:32,458 INFO Attempting conversion 4 -> 5
+2026-06-15 18:53:32,459 WARNING step_4to5 converter is not implemented — passing through the circuit unchanged
+2026-06-15 18:53:32,463 INFO Wrote intermediate abstraction file: out\15_06_26_18_51\abstraction5.json
+2026-06-15 18:53:32,463 WARNING Ecosystem QISKIT DOES NOT fully support abstraction level 5
+2026-06-15 18:53:32,463 INFO Attempting conversion 5 -> 6
+2026-06-15 18:53:32,464 WARNING step_5to6 converter is not implemented — passing through the circuit unchanged
+2026-06-15 18:53:32,467 INFO Wrote intermediate abstraction file: out\15_06_26_18_51\abstraction6.json
+2026-06-15 18:53:32,467 WARNING Ecosystem QISKIT DOES NOT fully support abstraction level 6
+2026-06-15 18:53:32,468 INFO Workflow finished. Summary: {'ecosystem': 'QISKIT', 'start_level': 2, 'max_reached': 3, 'output_base_dir': 'C:\\Users\\PC\\desarrollo\\lifia_um_quantum\\out', 'run_dir': 'C:\\Users\\PC\\desarrollo\\lifia_um_quantum\\out\\15_06_26_18_51'}
+2026-06-15 18:53:32,485 INFO Re-invocation succeeded inside venv; exiting bootstrap parent process
