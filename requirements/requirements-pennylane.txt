@@ -1,0 +1,2 @@
+# Requirements for PennyLane-based conversions/experiments
+pennylane

@@ -1,0 +1,2 @@
+# Requirements for Qiskit ecosystem
+qiskit

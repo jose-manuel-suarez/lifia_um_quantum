@@ -53,7 +53,6 @@ def append_sub_circuit(circuit, sub_circuit):
 
 
 
-
 def two_level_decomposition(U: np.ndarray, dimensions: int) -> list:
     """
     Given a matrix U, return the two-level matrix decomposition.
@@ -292,5 +291,4 @@ def print_matrix(matrix):
             print(element, end = " "*4)
             
 
-
-        print("\n", end = "") 
+        print("\n", end = "")

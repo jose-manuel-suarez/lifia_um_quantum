@@ -55,8 +55,6 @@ def convert_3to4(circuit_spec: dict | str, destination_file = None):
             circuit["operations"].append(controlled_unitary)
             circuit["operations"].append(generalized_toffoli)
 
-
-
         elif operation["type"] == "generalized_toffoli":
 
             circuit["operations"].append(operation)
@@ -66,7 +64,4 @@ def convert_3to4(circuit_spec: dict | str, destination_file = None):
         with open(destination_file, "w") as f:
             json.dump(circuit, f, indent=2)
 
-
     return circuit
-
-

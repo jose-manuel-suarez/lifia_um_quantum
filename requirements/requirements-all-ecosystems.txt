@@ -1,0 +1,6 @@
+# Aggregated list of optional quantum ecosystems
+qiskit
+pennylane
+qsharp
+openqasm
+amazon-braket-sdk

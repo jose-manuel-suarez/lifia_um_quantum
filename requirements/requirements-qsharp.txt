@@ -1,0 +1,4 @@
+# Requirements for Q# interoperability (Python ⟷ Q#)
+# Note: `qsharp` requires the Microsoft .NET runtime and the QDK installed
+# on the host system. See https://docs.microsoft.com/quantum/install-guide for details.
+qsharp

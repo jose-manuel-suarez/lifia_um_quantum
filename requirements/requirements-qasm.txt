@@ -1,0 +1,4 @@
+# Requirements for OpenQASM parsing / tooling
+# In many cases `qiskit` already provides OpenQASM support. If you prefer
+# a dedicated parser, consider `openqasm` or similar packages from PyPI.
+openqasm

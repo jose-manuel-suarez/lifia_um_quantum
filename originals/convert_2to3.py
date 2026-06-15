@@ -12,9 +12,7 @@ def convert_2to3(circuit_spec: dict | str, destination_file = None):
 
     qubit_count = spec["qubit_count"]
 
-
     # Transform multicontrolled U to toffoli and controlled U:
-
     circuit = {
         "abstraction_level": 3,
         "qubit_count": qubit_count, # qubit_count only counts qubits from principal register
@@ -24,8 +22,6 @@ def convert_2to3(circuit_spec: dict | str, destination_file = None):
 
     for operation in spec["operations"]:
         if operation["type"] == "controlled_unitary":
-
-            
 
             # Define generalized toffoli gate:
             generalized_toffoli = {
@@ -40,7 +36,6 @@ def convert_2to3(circuit_spec: dict | str, destination_file = None):
                 }
             }
 
-
             controlled_unitary = {
                 "type": "singy_controlled_unitary",
                 "targets": operation["targets"],
@@ -50,12 +45,9 @@ def convert_2to3(circuit_spec: dict | str, destination_file = None):
                 "unitary": operation["unitary"]
             }
 
-
             circuit["operations"].append(generalized_toffoli)
             circuit["operations"].append(controlled_unitary)
             circuit["operations"].append(generalized_toffoli)
-
-
 
         elif operation["type"] == "generalized_toffoli":
 
@@ -66,7 +58,4 @@ def convert_2to3(circuit_spec: dict | str, destination_file = None):
         with open(destination_file, "w") as f:
             json.dump(circuit, f, indent=2)
 
-
     return circuit
-
-

@@ -1,0 +1,26 @@
+# Core runtime requirements (base) — includes common plotting, testing and utility libs
+numpy
+pandas
+scipy
+
+# Plotting / visualization
+matplotlib
+seaborn
+plotly
+
+# Utilities
+tqdm
+requests
+pyyaml
+
+# Testing
+pytest
+pytest-cov
+pytest-mock
+hypothesis
+
+# Formatting & linting (optional)
+black
+flake8
+
+# Note: Ecosystem-specific requirements live in `requeriments/requirements-<ecosystem>.txt`

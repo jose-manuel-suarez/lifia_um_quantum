@@ -1,0 +1,3 @@
+# Requirements for AWS Braket SDK
+# The package name below is the official Amazon Braket SDK on PyPI.
+amazon-braket-sdk
