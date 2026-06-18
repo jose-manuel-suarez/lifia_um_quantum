@@ -1,19 +1,28 @@
 import os
 import logging
+from datetime import datetime
+from typing import Optional
+
+from click import Path
 
 class ColorFormatter(logging.Formatter):
-    """Formatter que inyecta secuencias de escape ANSI para dar color en consola."""
+    """Formatter condicional que inyecta colores ANSI si se solicita."""
     RESET = "\033[0m"
     GREEN = "\033[32m"      # INFO exitoso
     YELLOW = "\033[33m"     # WARNING
     RED = "\033[31m"        # ERROR / CRITICAL
     CYAN = "\033[36m"       # Metadatos (Tiempo)
 
+    def __init__(self, fmt: str, use_color: bool = True):
+        super().__init__(fmt)
+        self.use_color = use_color
+
     def format(self, record):
-        # Guardamos el formato original por seguridad
+        if not self.use_color:
+            return super().format(record)
+
         orig_fmt = self._style._fmt
 
-        # Aplicamos colores condicionales según la severidad del log
         if record.levelno == logging.INFO:
             self._style._fmt = f"{self.CYAN}%(asctime)s{self.RESET} {self.GREEN}%(levelname)s: %(message)s{self.RESET}"
         elif record.levelno == logging.WARNING:
@@ -24,48 +33,59 @@ class ColorFormatter(logging.Formatter):
             self._style._fmt = f"{self.CYAN}%(asctime)s{self.RESET} %(levelname)s: %(message)s"
 
         result = super().format(record)
-        self._style._fmt = orig_fmt  # Restauramos el formato estándar
+        self._style._fmt = orig_fmt
         return result
 
 
-def get_logger(name: str = "lifia", log_file: str = None, level=logging.INFO) -> logging.Logger:
+def get_logger(name: str = "lifia", env_dict: Optional[dict] = None) -> logging.Logger:
     """
-    Inicializa y configura un logger unificado con salida de colores en consola 
-    y persistencia plana en archivo de texto.
+    Inicializa y configura un logger dinámicamente parametrizado.
+    Genera el nombre del archivo basado en el ecosistema y la estampa de tiempo actual.
     """
-    # Forzar a Windows a interpretar secuencias ANSI si se ejecuta localmente
-    if os.name == 'nt':
-        os.system('')
+    cfg = env_dict if env_dict is not None else os.environ
 
     logger = logging.getLogger(name)
-    
-    # Evitar duplicación de handlers si el logger ya fue inicializado previamente
     if logger.handlers:
         return logger
-        
-    logger.setLevel(level)
 
-    # Estructura del string de formato base
+    if not cfg.get("LOG_ALLOWED", "True").lower() in ("true", "1", "yes", "y"):
+        return
+
+    # 2. Configuración de severidad y formato
+    log_level_str = cfg.get("LOG_LEVEL", "INFO").upper()
+    use_color = cfg.get("LOG_COLOR", "True").lower() in ("true", "1", "yes")
+    disable_file = cfg.get("LOG_DISABLE_FILE", "False").lower() in ("true", "1", "yes")
+    
+    level_map = {
+        "DEBUG": logging.DEBUG,
+        "INFO": logging.INFO,
+        "WARNING": logging.WARNING,
+        "ERROR": logging.ERROR,
+        "CRITICAL": logging.CRITICAL
+    }
+    logger.setLevel(level_map.get(log_level_str, logging.INFO))
     fmt_str = "%(asctime)s %(levelname)s %(message)s"
-    plain_formatter = logging.Formatter(fmt_str)
 
-    # 1. Configuración de Salida por Consola (Con color verde/amarillo/rojo)
+    # 3. Handler de Consola
+    if os.name == 'nt' and use_color:
+        os.system('')
     sh = logging.StreamHandler()
-    color_formatter = ColorFormatter(fmt_str)  # Se pasa el string de formato
-    sh.setFormatter(color_formatter)
+    sh.setFormatter(ColorFormatter(fmt_str, use_color=use_color))
     logger.addHandler(sh)
 
-    # 2. Configuración de Salida a Archivo (Texto plano limpio de caracteres ANSI)
-    if not log_file:
-        log_file = os.environ.get("LOG_FILE", "workflow.log")
+    # 4. Handler de Archivo Físico Automatizado
+    if not disable_file:
+        
+        from shared.io_utils import get_project_root
+        
+        log_filename = f"run_shot_{cfg.get("ECOSYSTEM", "DEFAULT").upper()}_{datetime.now().strftime("%d_%m_%y__%H_%M")}.log"
+        full_log_path = os.path.join(get_project_root(), cfg['LOG_DIR'], log_filename)
 
-    # Asegura que el directorio del archivo de logs exista antes de crearlo
-    log_path = os.path.dirname(log_file)
-    if log_path:
-        os.makedirs(log_path, exist_ok=True)
+        # Asegurar que la estructura de directorios exista
+        os.makedirs(log_filename, exist_ok=True)
 
-    fh = logging.FileHandler(log_file, encoding="utf-8")
-    fh.setFormatter(plain_formatter)
-    logger.addHandler(fh)
+        fh = logging.FileHandler(full_log_path, encoding="utf-8")
+        fh.setFormatter(logging.Formatter(fmt_str))
+        logger.addHandler(fh)
 
     return logger

@@ -16,19 +16,13 @@ def parse_arguments_and_env(argv=None):
     parser.add_argument("--output-dir", default=None, help="Base output directory (overrides .env OUTPUT_DIR)")
     parser.add_argument("--bootstrap", action="store_true", help="Create venv, install requirements and run inside it")
     parser.add_argument("--venv", default=".venv", help="Virtualenv directory to create/use")
-    parser.add_argument("--requirements", default="requirements/requirements.txt")
+    parser.add_argument("--requirements", default="requirements.txt")
     parser.add_argument("--run-ts", default=None, help="(internal) reuse the given run timestamp")
     parser.add_argument("--python-exe", default=None, help="Optional python executable command or path")
     args = parser.parse_args(argv)
 
     # Carga centralizada de entorno
     env = load_env(args.env)
+    logger = get_logger(name="lifia_workflow", env_dict=env)
 
-    # Configuración de logs y marcas de tiempo
-    time_stamp = args.run_ts or datetime.now().strftime("%d_%m_%y__%H_%M")
-    base_log_dir = Path(env.get("LOG_DIR", "logs"))
-    os.makedirs(base_log_dir, exist_ok=True)
-    log_filename = f"level_abstraction_shot_{env.get('ECOSYSTEM', 'DEFAULT')}_{time_stamp}.log"
-    logger = get_logger("lifia_workflow", log_file=str(base_log_dir / log_filename))
-
-    return args, env, time_stamp, logger
+    return args, env, logger

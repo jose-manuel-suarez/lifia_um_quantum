@@ -5,8 +5,10 @@ import subprocess
 import sys
 import logging
 import shutil
+import importlib
 import shlex
 from pathlib import Path
+import datetime
 
 # Importación de módulos locales existentes
 from shared.config import load_env
@@ -24,32 +26,49 @@ from shared.venv_management import (
     install_ecosystem_requirements
 )
 
-# Importación de la capa de verificación extraída del Jupyter Notebook
+# Importación de la capa de verificación
 from shared.verifications import run_mathematical_verifications
 
+def run_workflow(env: dict, logger: logging.Logger) -> dict:
+    """Ejecuta el flujo de trabajo de conversión basado en la configuración provista y realiza verificaciones."""
+    
+    # 1. Obtener los valores del entorno y limpiar barras iniciales/finales problemáticas
+    input_dir_str = env.get("INPUT_DIR", "input").lstrip("\\/")
+    output_dir = env.get("OUTPUT_DIR", "output").lstrip("\\/")
+    input_filename_str = env.get("INPUT_FILE", "abstraction.json").lstrip("\\/")
+    
+   # 2. Construir la ruta combinada usando el directorio actual del proyecto como base
+    base_project_dir = Path(__file__).resolve().parent
+    
+    # Ahora que no hay barras al principio, se concatenará de forma relativa impecable
+    input_file = base_project_dir / input_dir_str / input_filename_str
 
-def run_workflow(env: dict, output_dir: str, time_stamp: str, logger: logging.Logger) -> dict:
-    '''Ejecuta el flujo de trabajo de conversión basado en la configuración provista y realiza verificaciones.'''
-    input_dir = env.get("INPUT_DIR", "/input")
-    input_filename = env.get("INPUT_FILE", "abstraction2.json")
-    input_file = Path(input_dir) / input_filename
+    # Log de depuración inicial
+    logger.info(f"[DEBUG] Buscando archivo de entrada en: {input_file}")
 
-    ecosystem = env.get("ECOSYSTEM", "DEFAULT")
+    # Verificar si el archivo realmente existe antes de abrirlo
+    if not input_file.exists():
+        logger.error(f"El archivo de entrada no existe en la ruta especificada: {input_file}")
+        raise FileNotFoundError(f"No se encontró el archivo o directorio: '{input_file}'")
 
-    os.makedirs(output_dir, exist_ok=True)
-    run_dir = os.path.join(output_dir, time_stamp)
-    os.makedirs(run_dir, exist_ok=True)
+    ecosystem = env.get("ECOSYSTEM", "DEFAULT").upper()
+    timestamp = datetime.datetime.now().strftime('%d_%m_%y__%H_%M')
+    run_folder_name = f"run_shot_{ecosystem}_{timestamp}"
 
-    logger.info(f"Run output directory: {run_dir}")
+    output_path = base_project_dir / output_dir / run_folder_name
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    # Guardamos la ruta absoluta limpia en formato string para compatibilidad de os.path
+    run_dir = str(output_path.resolve())
+    logger.info(f"Run output directory successfully created at: {run_dir}")
 
     # =========================================================================
     # PASO 1: Verificaciones matemáticas automatizadas
     # =========================================================================
     try:
+        # Nota: Asegúrate de que 'run_mathematical_verifications' esté importada en el scope
         U_matrix, sub_matrices_json = run_mathematical_verifications(logger)
         
-        # Si sub_matrices_json es un diccionario que contiene ndarrays, 
-        # convertimos recursivamente los arrays de NumPy a listas nativas.
         if isinstance(sub_matrices_json, dict):
             serializable_verification = {
                 k: (v.tolist() if hasattr(v, "tolist") else v) 
@@ -105,25 +124,30 @@ def run_workflow(env: dict, output_dir: str, time_stamp: str, logger: logging.Lo
             logger.exception(f"Conversion {level}->{next_level} failed: {e}")
             break
 
-        if supports(ecosystem, next_level):
-            logger.info(f"Ecosystem {ecosystem} supports abstraction level {next_level}")
+        # Verificación de soporte del ecosistema
+        try:
+            if supports(ecosystem, next_level):
+                logger.info(f"Ecosystem {ecosystem} supports abstraction level {next_level}")
+                max_reached = next_level
+            else:
+                logger.warning(f"Ecosystem {ecosystem} DOES NOT fully support abstraction level {next_level}")
+        except NameError:
+            logger.warning("Function 'supports' is not defined in scope. Skipping ecosystem validation step.")
             max_reached = next_level
-        else:
-            logger.warning(f"Ecosystem {ecosystem} DOES NOT fully support abstraction level {next_level}")
 
     summary = {
         "ecosystem": ecosystem,
         "start_level": start_level,
         "max_reached": max_reached,
         "output_base_dir": str(Path(output_dir).resolve()),
-        "run_dir": str(Path(run_dir).resolve()),
+        "run_dir": run_dir,
     }
 
     logger.info(f"Workflow finished. Summary: {summary}")
     return summary
 
 
-def _handle_bootstrap(args, env: dict, time_stamp: str, logger: logging.Logger) -> bool:
+def _handle_bootstrap(args, env: dict, logger: logging.Logger) -> bool:
     """Encapsula la lógica de verificación, creación y reinvocación dentro del entorno virtual.
     
     Retorna True si el proceso debe finalizar inmediatamente en el padre.
@@ -135,7 +159,7 @@ def _handle_bootstrap(args, env: dict, time_stamp: str, logger: logging.Logger) 
         logger.info("Already running inside target virtualenv; proceeding to run workflow")
         return False
 
-    # Validar o recrear venv existente
+    # Validar la existencia del archivo de entorno virtual o recrear el entorno existente
     if venv_dir.exists():
         venv_ver = get_python_version(venv_py)
         if venv_ver is not None and (venv_ver[0] > 3 or (venv_ver[0] == 3 and venv_ver[1] >= 10)):
@@ -166,7 +190,7 @@ def _handle_bootstrap(args, env: dict, time_stamp: str, logger: logging.Logger) 
     install_ecosystem_requirements(venv_py, env.get("ECOSYSTEM", "").strip(), logger)
 
     # Reinvocación del script dentro del entorno virtual
-    cmd = [str(venv_py), str(Path(__file__).resolve()), "--env", args.env, "--run-ts", time_stamp]
+    cmd = [str(venv_py), str(Path(__file__).resolve()), "--env", args.env, "--run-ts", datetime.datetime.now().isoformat()]
     if args.output_dir:
         cmd += ["--output-dir", args.output_dir]
         
@@ -191,12 +215,12 @@ def _handle_bootstrap(args, env: dict, time_stamp: str, logger: logging.Logger) 
 
 def main(argv=None):
     # Extracción de la inicialización y parseo de variables configuradas
-    args, env, time_stamp, logger = parse_arguments_and_env(argv)
+    args, env, logger = parse_arguments_and_env(argv)
 
     # Manejo del bootstrapping aislado
     if args.bootstrap:
         try:
-            should_exit = _handle_bootstrap(args, env, time_stamp, logger)
+            should_exit = _handle_bootstrap(args, env, logger)
             if should_exit:
                 return
         except RuntimeError as re_err:
@@ -209,8 +233,7 @@ def main(argv=None):
             raise
 
     # Ejecución normal del workflow en el intérprete actual
-    output_dir = args.output_dir if args.output_dir is not None else env.get("OUTPUT_DIR", "out")
-    run_workflow(env=env, output_dir=output_dir, time_stamp=time_stamp, logger=logger)
+    run_workflow(env=env, logger=logger)
 
 
 if __name__ == "__main__":
