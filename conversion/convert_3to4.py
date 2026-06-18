@@ -1,73 +1,39 @@
-import numpy as np
+# conversion/step_3to4.py
 import json
+from typing import Optional
+import logging
+from shared.factory import create_operation
+from shared.io import write_json_file
 
-
-
-def convert_3to4(circuit_spec: dict | str, destination_file = None):
+def convert_3to4(circuit_spec: dict | str, destination_file: Optional[str] = None, logger: Optional[logging.Logger] = None) -> dict:
     '''
     Convert a quantum circuit specification from abstraction level 3 to abstraction level 4.
-    This conversion transforms generalized toffoli operations into a sequence of toffoli and single qubit gates.
-    Parameters:
-        circuit_spec (dict | str): The quantum circuit specification at abstraction level 2.
-        destination_file (str, optional): The file path to save the converted specification.
-
-    Returns:
-        dict: The converted quantum circuit specification at abstraction level 4.
+    Muta las operaciones del circuito utilizando polimorfismo orientado a objetos.
     '''
 
-    if isinstance(circuit_spec, str):
-        spec = json.loads(circuit_spec)
-    else:
-        spec = circuit_spec
+    # Carga inicial del JSON de entrada (Nivel 3)
+    raw_data = json.loads(circuit_spec) if isinstance(circuit_spec, str) else circuit_spec
+    qubit_count = raw_data["qubit_count"]
+    ancilla_qubits = raw_data.get("ancilla_qubits", [])
 
-    qubit_count = spec["qubit_count"]
+    # Convertir la lista de operaciones crudas a objetos del dominio polimórficos
+    operations_objects = [create_operation(op) for op in raw_data.get("operations", [])]
 
-    circuit = {
-        "abstraction_level": 3,
+    # Ejecutar la mutación hacia el Nivel 4 delegando la lógica en cada objeto
+    level_4_operations = []
+    for operation in operations_objects:
+        transformed_ops = operation.to_level_4(qubit_count)
+        level_4_operations.extend(transformed_ops)
+
+    # Construir la estructura final del circuito para el Nivel 4
+    circuit_result = {
+        "abstraction_level": 4,
         "qubit_count": qubit_count,
-        "ancilla_qubits": [qubit_count],
-        "operations": []
+        "ancilla_qubits": ancilla_qubits,  # Mantiene las ancillas asignadas o se procesan según tu criterio
+        "operations": [op.to_dict() for op in level_4_operations]
     }
 
-    for operation in spec["operations"]:
-        if operation["type"] == "controlled_unitary":
+    # 5. Guardado seguro e independiente controlado internamente por la librería auxiliar de I/O
+    write_json_file(circuit_result, destination_file, logger=logger)
 
-            generalized_toffoli = {
-            "type": "generalized_toffoli",
-            "targets": [qubit_count],
-            "controls": operation["controls"],
-            "unitary": {
-                "matrix": [
-                    [0, 1],
-                    [1, 0]
-                ]
-                }
-            }
-
-
-            controlled_unitary = {
-                "type": "singy_controlled_unitary",
-                "targets": operation["targets"],
-                "controls": [
-                    {"qubit": qubit_count, "state": 0}
-                ],
-                "unitary": operation["unitary"]
-            }
-
-
-            circuit["operations"].append(generalized_toffoli)
-            circuit["operations"].append(controlled_unitary)
-            circuit["operations"].append(generalized_toffoli)
-
-        elif operation["type"] == "generalized_toffoli":
-
-            circuit["operations"].append(operation)
-
-
-
-    if destination_file:
-        with open(destination_file, "w") as f:
-            json.dump(circuit, f, indent=2)
-
-    return circuit
-
+    return circuit_result
