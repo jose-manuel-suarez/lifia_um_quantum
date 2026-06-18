@@ -3,7 +3,7 @@
 
 import numpy as np
 import logging
-from conversion import two_levels
+from conversion.two_levels import two_levels_decompose
 
 class bcolors:
     HEADER = '\033[95m'
@@ -64,7 +64,7 @@ def run_mathematical_verifications(logger: logging.Logger) -> tuple:
     print_matrix(U, logger)
 
     # Descomposición
-    matrices, matrices_json = two_levels(U, dimensions)
+    matrices, matrices_json = two_levels_decompose(U, dimensions)
 
     # Reconstrucción: A = U_n @ ... @ U_2 @ U_1
     A = np.eye(dimensions, dtype=complex)
@@ -74,7 +74,7 @@ def run_mathematical_verifications(logger: logging.Logger) -> tuple:
 
     # Verificar si A^H == U (usando np.allclose para robustez matemática)
     is_reconstruction_correct = np.allclose(A.conj().T, U, atol=1e-10)
-    logger.info(f"¿La reconstrucción de la matriz es correcta? -> {bcolors.OKGREEN if is_reconstruction_correct else bcolors.FAIL}{is_reconstruction_correct}{bcolors.ENDC}")
+    logger.info(f"¿La reconstruccion de la matriz es correcta? -> {bcolors.OKGREEN if is_reconstruction_correct else bcolors.FAIL}{is_reconstruction_correct}{bcolors.ENDC}")
 
     # Validar que cada bloque no trivial sea unitario
     logger.info("Validando unitariedad de sub-bloques...")
@@ -84,5 +84,5 @@ def run_mathematical_verifications(logger: logging.Logger) -> tuple:
         if not unitary_check:
             logger.warning(f"¡Alerta! Sub-bloque U{k + 1} para los estados {matrix_json['states']} NO es unitario.")
         
-    logger.info("Verificaciones matemáticas finalizadas con éxito.")
+    logger.info("Verificaciones matematicas finalizadas con exito.")
     return U, matrices_json

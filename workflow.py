@@ -10,9 +10,8 @@ from pathlib import Path
 
 # Importación de módulos locales existentes
 from shared.config import load_env
-from shared.ecosystems import supports, max_supported
-from shared.io import write_json_file
-from conversion import get_converter
+from shared.ecosystems import supports
+from shared import io_utils as shared_io
 from shared.env_vars import parse_arguments_and_env
 
 # Importación de la capa modularizada de entorno virtual
@@ -31,7 +30,10 @@ from shared.verifications import run_mathematical_verifications
 
 def run_workflow(env: dict, output_dir: str, time_stamp: str, logger: logging.Logger) -> dict:
     '''Ejecuta el flujo de trabajo de conversión basado en la configuración provista y realiza verificaciones.'''
-    input_file = env.get("INPUT_FILE", "abstraction2.json")
+    input_dir = env.get("INPUT_DIR", "/input")
+    input_filename = env.get("INPUT_FILE", "abstraction2.json")
+    input_file = Path(input_dir) / input_filename
+
     ecosystem = env.get("ECOSYSTEM", "DEFAULT")
 
     os.makedirs(output_dir, exist_ok=True)
@@ -45,10 +47,23 @@ def run_workflow(env: dict, output_dir: str, time_stamp: str, logger: logging.Lo
     # =========================================================================
     try:
         U_matrix, sub_matrices_json = run_mathematical_verifications(logger)
-        # Opcional: Persistir los resultados intermedios de la verificación
+        
+        # Si sub_matrices_json es un diccionario que contiene ndarrays, 
+        # convertimos recursivamente los arrays de NumPy a listas nativas.
+        if isinstance(sub_matrices_json, dict):
+            serializable_verification = {
+                k: (v.tolist() if hasattr(v, "tolist") else v) 
+                for k, v in sub_matrices_json.items()
+            }
+        elif hasattr(sub_matrices_json, "tolist"):
+            serializable_verification = sub_matrices_json.tolist()
+        else:
+            serializable_verification = sub_matrices_json
+
         verification_path = os.path.join(run_dir, "matrix_decomposition_check.json")
-        write_json_file(sub_matrices_json, verification_path)
+        shared_io.write_json_file(serializable_verification, verification_path, logger=logger)
         logger.info(f"Wrote mathematical verification breakdown to: {verification_path}")
+        
     except Exception as e:
         logger.error(f"Mathematical verifications pipeline failed: {str(e)}")
         raise e
@@ -84,7 +99,7 @@ def run_workflow(env: dict, output_dir: str, time_stamp: str, logger: logging.Lo
         out_path = os.path.join(run_dir, out_filename)
         try:
             current_spec = converter.convert(current_spec, destination_file=None, ecosystem=ecosystem, logger=logger)
-            write_json_file(current_spec, out_path)
+            shared_io.write_json_file(current_spec, out_path, logger=logger)
             logger.info(f"Wrote intermediate abstraction file: {out_path}")
         except Exception as e:
             logger.exception(f"Conversion {level}->{next_level} failed: {e}")
@@ -155,9 +170,16 @@ def _handle_bootstrap(args, env: dict, time_stamp: str, logger: logging.Logger) 
     if args.output_dir:
         cmd += ["--output-dir", args.output_dir]
         
+    # En workflow.py dentro de _handle_bootstrap:
     logger.info(f"Re-invoking inside venv: {' '.join(cmd)}")
     proc = subprocess.run(cmd, capture_output=True, text=True)
+    
     if proc.returncode != 0:
+        # Imprimir directamente en la consola estándar de MINGW64 para verlo al instante
+        print("\n=== ERROR DETECTADO EN EL SUBPROCESO (VENV) ===", file=sys.stderr)
+        print(proc.stderr, file=sys.stderr)
+        print("================================================\n", file=sys.stderr)
+        
         logger.error("Re-invoked process failed")
         logger.error("--- stdout ---\n" + (proc.stdout or ""))
         logger.error("--- stderr ---\n" + (proc.stderr or ""))

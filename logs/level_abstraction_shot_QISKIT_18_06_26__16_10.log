@@ -1,0 +1,17 @@
+2026-06-18 16:10:28,662 INFO Already running inside target virtualenv; proceeding to run workflow
+2026-06-18 16:10:28,662 INFO Run output directory: /output\18_06_26__16_10
+2026-06-18 16:10:28,662 INFO Iniciando pruebas de descomposición matricial de dos niveles...
+2026-06-18 16:10:28,677 INFO Matriz Unitaria original (U):
+2026-06-18 16:10:28,677 INFO 
+-0.308+0.000j    -0.063-0.000j    0.269+0.000j     0.743+0.000j     0.292+0.000j     0.031+0.000j     -0.355+0.000j    0.254+0.000j     
+0.338-0.378j     -0.078-0.179j    0.153-0.389j     -0.020+0.076j    0.163+0.400j     -0.133+0.245j    0.052+0.410j     0.188-0.231j     
+0.130-0.205j     -0.310-0.309j    -0.284+0.326j    0.316-0.225j     -0.387-0.135j    -0.077+0.276j    0.205+0.111j     0.197+0.263j     
+0.452+0.103j     -0.293+0.139j    0.126+0.126j     -0.078-0.146j    0.487-0.119j     0.043+0.404j     -0.180-0.192j    -0.245+0.274j    
+0.165+0.371j     0.057-0.385j     0.248-0.120j     0.101+0.121j     0.037+0.000j     0.627-0.015j     0.412-0.035j     0.111+0.081j     
+0.081+0.024j     -0.273+0.322j    0.098-0.060j     0.297+0.136j     -0.353+0.184j    0.218-0.105j     -0.028+0.340j    -0.600+0.052j    
+0.101+0.173j     0.168+0.248j     -0.420-0.397j    0.157-0.004j     -0.273+0.203j    0.194+0.411j     -0.204-0.348j    0.154-0.062j     
+0.376-0.144j     0.422+0.254j     0.177+0.283j     0.329-0.005j     -0.039-0.180j    -0.110+0.068j    0.321-0.167j     -0.080-0.433j    
+2026-06-18 16:10:28,678 INFO ¿La reconstruccion de la matriz es correcta? -> [92mTrue[0m
+2026-06-18 16:10:28,679 INFO Validando unitariedad de sub-bloques...
+2026-06-18 16:10:28,679 INFO Verificaciones matematicas finalizadas con exito.
+2026-06-18 16:10:28,680 ERROR Mathematical verifications pipeline failed: write_json_file() got an unexpected keyword argument 'logger'

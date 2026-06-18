@@ -4,9 +4,10 @@ import numpy as np
 import logging
 from pathlib import Path
 from typing import Optional
+from typing import Optional, Union
 
-
-def write_json_file(data: dict, destination_file: Optional[str | Path], logger: Optional[logging.Logger] = None) -> None:
+print("--- CARGANDO SHARED/IO.PY CON PARAMETRO LOGGER ---")
+def write_json_file(data: dict, destination_file: Optional[Union[str, Path]], logger: Optional[logging.Logger] = None) -> None:
     """
     Valida la ruta de destino y escribe un diccionario JSON.
     Controla de forma interna las excepciones y los logs del estado de la escritura.

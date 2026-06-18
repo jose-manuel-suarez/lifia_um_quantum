@@ -3,7 +3,7 @@ from typing import Optional
 import logging
 from shared.factory import create_operation
 # Importación de tu librería auxiliar de I/O
-from shared.io import write_json_file
+from shared.io_utils import write_json_file
 
 def convert_2to3(circuit_spec: dict | str, destination_file: Optional[str] = None, logger: Optional[logging.Logger] = None) -> dict:
     '''

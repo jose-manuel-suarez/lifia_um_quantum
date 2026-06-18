@@ -1,0 +1,18 @@
+2026-06-18 16:14:02,468 INFO Run output directory: /output\18_06_26__16_14
+2026-06-18 16:14:02,469 INFO Iniciando pruebas de descomposición matricial de dos niveles...
+2026-06-18 16:14:02,485 INFO Matriz Unitaria original (U):
+2026-06-18 16:14:02,485 INFO 
+0.394+0.000j     0.454+0.000j     -0.174+0.000j    -0.426+0.000j    -0.283+0.000j    0.223+0.000j     -0.408+0.000j    0.361+0.000j     
+-0.196+0.350j    0.032-0.432j     -0.396-0.339j    0.020+0.198j     0.300-0.222j     -0.016+0.009j    -0.043+0.236j    0.203+0.319j     
+-0.111+0.465j    0.101+0.503j     -0.019+0.139j    0.188+0.254j     -0.089+0.050j    0.031-0.287j     -0.263+0.435j    -0.179-0.067j    
+0.344+0.254j     -0.302-0.154j    0.264-0.132j     -0.378-0.071j    0.121-0.043j     0.495-0.042j     0.128+0.209j     -0.380-0.004j    
+0.254+0.014j     0.059+0.052j     0.014-0.053j     0.210+0.616j     -0.044-0.019j    0.065+0.649j     -0.044-0.153j    -0.222+0.032j    
+0.309-0.087j     -0.181+0.015j    -0.554-0.122j    0.050-0.267j     0.171+0.303j     -0.252+0.022j    -0.334-0.003j    -0.407-0.077j    
+0.041+0.187j     -0.201-0.372j    0.230+0.326j     0.037+0.060j     -0.334+0.185j    -0.206-0.142j    -0.302-0.176j    -0.112+0.527j    
+-0.257-0.034j    -0.078+0.061j    -0.258-0.201j    -0.143-0.094j    -0.619+0.319j    0.073+0.250j     0.339+0.290j     -0.062+0.174j    
+2026-06-18 16:14:02,486 INFO ¿La reconstruccion de la matriz es correcta? -> [92mTrue[0m
+2026-06-18 16:14:02,487 INFO Validando unitariedad de sub-bloques...
+2026-06-18 16:14:02,487 INFO Verificaciones matematicas finalizadas con exito.
+2026-06-18 16:14:02,488 INFO  [DEBUG] shared_io está en: C:\Users\PC\desarrollo\lifia_um_quantum\shared\io_utils.py
+2026-06-18 16:14:02,488 INFO  [DEBUG] Firma de write_json_file: (obj, path)
+2026-06-18 16:14:02,488 ERROR Mathematical verifications pipeline failed: write_json_file() got an unexpected keyword argument 'logger'

@@ -3,7 +3,7 @@ import json
 from typing import Optional
 import logging
 from shared.factory import create_operation
-from shared.io import write_json_file
+from shared.io_utils import write_json_file
 
 def convert_3to4(circuit_spec: dict | str, destination_file: Optional[str] = None, logger: Optional[logging.Logger] = None) -> dict:
     '''

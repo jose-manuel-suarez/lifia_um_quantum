@@ -3,7 +3,7 @@ from typing import Union
 import numpy as np
 
 from conversion.two_levels import convert_1to2
-from shared.io import json_matrix_to_numpy, write_json_file
+from shared.io_utils import json_matrix_to_numpy, write_json_file
 
 
 def convert(circuit_spec: Union[dict, str, np.ndarray], destination_file=None, ecosystem=None, logger=None):
